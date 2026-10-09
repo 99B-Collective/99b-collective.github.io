@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>99B Collective</title>
+<meta name="description" content="The 99B Collective: a film club for the Design, Mathematics and Public Policy floors of Building 99B, IIT Delhi.">
+<meta property="og:title" content="The 99B Collective">
+<meta property="og:description" content="A film club of Building 99B, IIT Delhi. Next screening, programme, and a box for your film suggestions.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23A9C8E7'/%3E%3Ctext x='32' y='42' font-family='Georgia' font-size='26' text-anchor='middle' fill='%2346213F'%3E99B%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,600;1,6..96,500&family=Jost:wght@400;500&display=swap">
+<style>
+/* Layout: one centred column of "chapters". Each chapter borrows a palette from a different Wes Anderson film:
+   powder-blue sea (page), hotel pink (Now Showing), scout-camp mustard (Programme), diving-team blue and red (Suggestion Box),
+   train-carriage blue and saffron (Ticket Booth), mixed title cards (Archive), magazine cream and lavender (Building). */
+:root{
+  color-scheme:light;
+  --bg:#DDE9F3;        /* powder-blue sea */
+  --paper:#FDF7EE;     /* card stock */
+  --ink:#3A2440;       /* plum ink */
+  --muted:#6E5C74;
+  --pink:#F3C9D2;  --pink-deep:#C24A72;
+  --mustard:#F1D58A; --mustard-deep:#A9761C;
+  --sky:#A9CBEA;   --red:#C8433A;
+  --navy:#2F4A7A;  --saffron:#E7A645;
+  --lav:#CDBEEB;   --cream:#F6E6C8;
+  --line:rgba(58,36,64,.28);
+  --shadow:rgba(58,36,64,.14);
+  --on-tone:#2A1A30;   /* text on any pastel panel, both themes */
+  --display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --sans:"Jost","Futura","Century Gothic","Avenir Next",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  color-scheme:dark;--bg:#22283F;--paper:#2F3552;--ink:#F4E9F0;--muted:#C4BCD4;--line:rgba(244,233,240,.26);--shadow:rgba(0,0,0,.3);
+  --pink:#E7B5C3;--mustard:#E6C677;--sky:#97BADF;--lav:#B9A8E0;--cream:#E9D6B3;--pink-deep:#F08DAE;--red:#EE7F75;--navy:#9DB6E8;--saffron:#F0B95E;--mustard-deep:#E6C677}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#22283F;--paper:#2F3552;--ink:#F4E9F0;--muted:#C4BCD4;--line:rgba(244,233,240,.26);--shadow:rgba(0,0,0,.3);
+  --pink:#E7B5C3;--mustard:#E6C677;--sky:#97BADF;--lav:#B9A8E0;--cream:#E9D6B3;--pink-deep:#F08DAE;--red:#EE7F75;--navy:#9DB6E8;--saffron:#F0B95E;--mustard-deep:#E6C677}
+
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;margin:0}
+.wrap{max-width:760px;margin:0 auto;padding-inline:20px;padding-block:28px 80px;display:grid;gap:64px}
+h1,h2,h3{font-family:var(--display);font-weight:600;text-wrap:balance;margin:0;line-height:1.1}
+.label{font-family:var(--sans);text-transform:uppercase;letter-spacing:.22em;font-size:.72rem;font-weight:500;color:var(--muted)}
+a{color:var(--pink-deep)}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--pink-deep);outline-offset:3px}
+img{max-width:100%}
+[hidden]{display:none!important}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--on-tone);background:var(--paper);color:var(--ink);padding:10px 18px;text-transform:uppercase;letter-spacing:.16em;font-size:.78rem;font-weight:500;text-decoration:none;cursor:pointer;border-radius:2px;transition:transform .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.solid{background:var(--on-tone);color:#FDF7EE}
+.btn[aria-disabled="true"]{opacity:.55;cursor:not-allowed;transform:none}
+
+/* ---------- Masthead ---------- */
+.masthead{display:grid;justify-items:center;text-align:center;gap:22px}
+.awning{width:100%;height:34px;background:repeating-linear-gradient(90deg,var(--sky) 0 28px,var(--paper) 28px 56px,var(--pink) 56px 84px,var(--paper) 84px 112px,var(--mustard) 112px 140px,var(--paper) 140px 168px);border-radius:0 0 50% 50%/0 0 100% 100%;box-shadow:0 6px 0 var(--shadow)}
+.titlecard{width:100%;border:2px solid var(--ink);outline:1px solid var(--ink);outline-offset:-8px;background:var(--paper);padding:38px 20px 30px;display:grid;gap:12px;justify-items:center}
+.titlecard h1{font-size:clamp(2.6rem,11vw,4.6rem)}
+.titlecard h1 em{font-style:italic;color:var(--pink-deep)}
+.rule{display:flex;align-items:center;gap:12px;width:min(320px,80%)}
+.rule::before,.rule::after{content:"";flex:1;height:1px;background:var(--ink)}
+.rule span{font-family:var(--display);font-size:1.1rem;color:var(--saffron)}
+.marquee{width:100%;background:#2F3A63;color:#FDF7EE;padding:18px 16px;display:grid;gap:4px;justify-items:center;position:relative;border-radius:3px}
+.marquee::before,.marquee::after{content:"";position:absolute;left:8px;right:8px;height:10px;background:radial-gradient(circle,#F2C35E 0 3px,transparent 3.5px);background-size:18px 10px;animation:twinkle 1.6s steps(2) infinite}
+.marquee::before{top:4px}.marquee::after{bottom:4px;animation-delay:.8s}
+@keyframes twinkle{50%{opacity:.35}}
+.marquee .label{color:#C9D9F2}
+.marquee strong{font-family:var(--display);font-size:clamp(1.4rem,6vw,2.1rem);font-weight:600;letter-spacing:.02em;text-transform:uppercase;line-height:1.15;padding-block:6px}
+.nav{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px}
+.nav a{color:var(--ink);text-decoration:none;font-size:.74rem;text-transform:uppercase;letter-spacing:.18em;border-bottom:1px solid transparent}
+.nav a:hover{border-color:var(--pink-deep)}
+
+/* ---------- Chapters, each with its own film palette ---------- */
+.chapter{display:grid;gap:22px;scroll-margin-top:20px}
+.t-pink{--tone:var(--pink);--tone-deep:var(--pink-deep)}
+.t-mustard{--tone:var(--mustard);--tone-deep:var(--mustard-deep)}
+.t-sky{--tone:var(--sky);--tone-deep:var(--red)}
+.t-navy{--tone:var(--sky);--tone-deep:var(--saffron)}
+.t-lav{--tone:var(--lav);--tone-deep:var(--pink-deep)}
+.opener{display:grid;justify-items:center;text-align:center;gap:6px}
+.opener .num{font-family:var(--display);font-style:italic;color:var(--tone-deep);font-size:1rem}
+.opener h2{font-size:clamp(1.9rem,7vw,2.6rem)}
+.opener p{margin:4px 0 0;max-width:52ch;color:var(--muted)}
+.panel{background:var(--tone);color:var(--on-tone);border:1.5px solid var(--on-tone);padding:24px 20px;display:grid;gap:18px;box-shadow:6px 6px 0 var(--shadow)}
+.panel .label,.panel .meta,.panel .fine{color:#5A4560}
+.panel.plain{background:var(--paper);color:var(--ink)}
+.panel.plain .label,.panel.plain .fine{color:var(--muted)}
+
+/* Now showing */
+.showing h3{font-size:clamp(1.7rem,6vw,2.3rem)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px 20px;margin:0}
+.facts div{display:grid;gap:2px;min-width:0}
+.facts dt{font-size:.68rem;text-transform:uppercase;letter-spacing:.2em;color:#5A4560}
+.facts dd{margin:0;font-weight:500}
+.countdown{display:grid;grid-template-columns:repeat(4,1fr);border:1.5px solid var(--on-tone);text-align:center;background:#FDF7EE}
+.countdown div{padding:12px 4px;display:grid}
+.countdown div+div{border-left:1.5px solid var(--on-tone)}
+.countdown b{font-family:var(--display);font-size:clamp(1.5rem,6vw,2.2rem);font-variant-numeric:tabular-nums;line-height:1}
+.countdown span{font-size:.62rem;text-transform:uppercase;letter-spacing:.2em;color:#5A4560}
+.status-line{text-align:center;font-family:var(--display);font-style:italic;font-size:1.15rem;margin:0}
+.legal{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;border:1px dashed var(--on-tone);padding:6px 10px;justify-self:start}
+.row{display:flex;flex-wrap:wrap;gap:10px}
+.empty{text-align:center;display:grid;gap:8px;justify-items:center;padding:12px 0}
+.empty .big{font-family:var(--display);font-size:1.6rem;font-style:italic}
+
+/* Programme */
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.chip{border:1.5px solid var(--on-tone);background:transparent;color:var(--on-tone);padding:5px 14px;border-radius:999px;font-size:.78rem;letter-spacing:.08em;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--on-tone);color:#FDF7EE}
+.reel{list-style:none;margin:0;padding:0;border-top:1.5px solid var(--on-tone)}
+.reel li{display:grid;grid-template-columns:72px minmax(0,1fr);gap:16px;padding:16px 0;border-bottom:1px solid rgba(42,26,48,.25);align-items:start}
+.date-stamp{border:1.5px solid var(--on-tone);text-align:center;padding:6px 0;background:#FDF7EE;line-height:1.1}
+.date-stamp b{display:block;font-family:var(--display);font-size:1.6rem;font-variant-numeric:tabular-nums}
+.date-stamp span{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase}
+.reel h3{font-size:1.3rem}
+.meta{font-size:.82rem}
+
+/* Suggestion box */
+.telegram{border-top:8px solid var(--red)}
+.telegram h3{font-size:1.5rem}
+.telegram p{margin:0}
+.telegram .btn{justify-self:start}
+.checker form{display:flex;flex-wrap:wrap;gap:10px}
+.checker input{flex:1 1 200px;min-width:0;background:var(--paper);color:var(--ink);border:1.5px solid var(--line);padding:10px 12px;border-radius:2px}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.links a{font-size:.82rem;border:1.5px solid var(--ink);padding:6px 12px;text-decoration:none;color:var(--ink);background:var(--bg)}
+.links a:hover{background:var(--sky);color:var(--on-tone)}
+.rules{margin:0;padding-left:1.2em;display:grid;gap:4px;font-size:.92rem}
+
+/* Ticket booth: train-carriage blue with saffron */
+.booth{display:grid;grid-template-columns:minmax(0,1fr);gap:22px}
+@media (min-width:680px){.booth{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}}
+.screen{height:10px;border-radius:50% 50% 0 0/100% 100% 0 0;background:var(--saffron);margin-bottom:14px;position:relative}
+.screen::after{content:"SCREEN";position:absolute;inset:12px 0 auto;text-align:center;font-size:.6rem;letter-spacing:.4em;color:#5A4560}
+.seats{display:grid;gap:6px;padding-top:16px;justify-content:center}
+.seat-row{display:grid;grid-template-columns:16px repeat(4,1fr) 12px repeat(4,1fr);gap:5px;align-items:center}
+.seat-row>span{font-size:.65rem;text-align:center}
+.seat{width:28px;height:26px;border:1.5px solid var(--on-tone);background:#FDF7EE;color:var(--on-tone);border-radius:6px 6px 3px 3px;cursor:pointer;padding:0;font-size:.6rem}
+.seat[aria-pressed="true"]{background:#2F4A7A;border-color:#2F4A7A;color:#FDF7EE}
+.field{display:grid;gap:4px}
+.field input{background:#FDF7EE;color:var(--on-tone);border:1.5px solid rgba(42,26,48,.35);padding:10px 12px;border-radius:2px;width:100%;min-width:0}
+.ticket{background:#2F4A7A;color:#FDF2DE;display:grid;grid-template-columns:minmax(0,1fr) 92px;position:relative;filter:drop-shadow(0 6px 0 rgba(42,26,48,.2))}
+.ticket::before,.ticket::after{content:"";position:absolute;right:92px;width:18px;height:18px;border-radius:50%;background:var(--tone);transform:translateX(50%)}
+.ticket::before{top:-9px}.ticket::after{bottom:-9px}
+.ticket .main{padding:18px 16px;display:grid;gap:6px;border-right:2px dashed rgba(253,242,222,.55);min-width:0}
+.ticket .main small{letter-spacing:.24em;text-transform:uppercase;font-size:.6rem;color:#F2C35E}
+.ticket .main strong{font-family:var(--display);font-size:1.35rem;line-height:1.15;overflow-wrap:anywhere}
+.ticket .stub{display:grid;place-items:center;text-align:center;padding:10px 6px;gap:4px;background:#E7A645;color:#2A1A30}
+.ticket .stub b{font-family:var(--display);font-size:1.7rem;line-height:1}
+.ticket .stub small{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase}
+.fine{font-size:.78rem;margin:0}
+
+/* Archive: each title card takes a different film's colour */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px}
+.card{aspect-ratio:3/4;max-width:100%;border:1.5px solid var(--on-tone);display:grid;grid-template-rows:auto 1fr auto;padding:12px;text-align:center;color:var(--on-tone);position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;inset:6px;border:1px solid rgba(42,26,48,.45);pointer-events:none}
+.card .label{color:#5A4560;font-size:.58rem}
+.card h3{align-self:center;font-size:1.25rem;overflow-wrap:anywhere;padding-inline:4px}
+.card .foot{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:#5A4560}
+.card.c0{background:#F3C9D2}.card.c1{background:#F1D58A}.card.c2{background:#A9CBEA}.card.c3{background:#CDBEEB}.card.c4{background:#F6E6C8}.card.c5{background:#F4B8A6}
+
+/* Building: magazine cream and lavender */
+.building{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
+@media (min-width:680px){.building{grid-template-columns:230px minmax(0,1fr);align-items:start}}
+.facade{border:2px solid var(--on-tone);background:var(--cream);padding:10px;display:grid;gap:8px}
+.facade .roof{text-align:center;font-family:var(--display);font-size:1.4rem;border-bottom:2px solid var(--on-tone);padding-bottom:6px}
+.floor{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center;border:1.5px solid var(--on-tone);background:#FDF7EE;color:var(--on-tone);padding:10px;cursor:pointer;text-align:left}
+.floor .win{display:flex;gap:4px}
+.floor .win i{width:12px;height:16px;border:1.5px solid var(--on-tone);border-radius:6px 6px 0 0;background:#FDF7EE}
+.floor[aria-pressed="true"]{background:#FBE4EA}
+.floor[aria-pressed="true"] .win i{background:#F2C35E}
+.floor small{display:block;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:#5A4560}
+.floor span{font-weight:500;font-size:.92rem}
+.door{height:30px;width:44px;justify-self:center;border:2px solid var(--on-tone);border-bottom:0;border-radius:22px 22px 0 0;background:var(--pink-deep)}
+.room{min-width:0}
+.room h3{font-size:1.6rem;margin-bottom:8px}
+.room p{margin:0 0 10px}
+
+footer{text-align:center;display:grid;gap:6px;justify-items:center}
+footer p{margin:0;font-size:.82rem;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* =====================================================================
+   SETTINGS — edit this block to update the website.
+   Keep the quote marks and commas exactly as they are.
+   Dates are YYYY-MM-DD, times are 24-hour (IST), e.g. "18:30".
+   ===================================================================== */
+var SETTINGS = {
+  formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfwT6_x6YF_g7qrA-SYu2MF87eELFODtAgtPE9YyfTwgI5QNQ/viewform",   // paste your live Google Form link between the quotes
+
+  next: {        // the next screening (leave title "" to show "to be announced")
+    title: "Sudani From Nigeria",
+    year: "",
+    director: "",
+    language: "",
+    theme: "",
+    date: "",              // e.g. "2026-10-23"
+    time: "18:00",
+    venue: "Building 99B, IIT Delhi",
+    where: "",             // legal source, e.g. "YouTube rental"
+    snacks: "Chai and samosa",
+    blurb: ""
+  },
+
+  programme: [   // upcoming films; copy a line to add another
+    // { title: "Film name", year: "2019", language: "Malayalam", theme: "Friendship", date: "2026-11-06", where: "Prime Video" },
+  ],
+
+  archive: [     // films already screened
+    // { title: "Film name", year: "2018", language: "Hindi", theme: "Friendship", date: "2026-09-18" },
+  ]
+};
+/* ===================== end of settings ===================== */
+</script>
+
+<script>
+(function(){
+var S=SETTINGS, n=S.next||{};
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function when(d,t){if(!d)return null;var x=new Date(d+'T'+(t||'18:00')+':00+05:30');return isNaN(x)?null:x}
+function fmtDate(x,o){return x.toLocaleDateString('en-IN',Object.assign({timeZone:'Asia/Kolkata'},o))}
+function fmtTime(x){return x.toLocaleTimeString('en-IN',{timeZone:'Asia/Kolkata',hour:'numeric',minute:'2-digit'})}
+function hash(s){var h=0;s=String(s);for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return Math.abs(h)}
+function load(k,d){try{var v=localStorage.getItem('99b:'+k);return v==null?d:v}catch(e){return d}}
+function keep(k,v){try{localStorage.setItem('99b:'+k,v)}catch(e){}}
+
+var ui={lang:'All',seat:load('seat',''),name:load('name',''),floor:'spp'};
+var nextAt=when(n.date,n.time), hasNext=!!n.title;
+
+function formButton(label){
+  if(S.formUrl)return '<a class="btn solid" href="'+esc(S.formUrl)+'" target="_blank" rel="noopener">'+label+'</a>';
+  return '<span class="btn" aria-disabled="true">Form link coming soon</span>';
+}
+function calLink(){
+  if(!nextAt)return '';
+  var end=new Date(nextAt.getTime()+150*60000);
+  function z(d){return d.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'')}
+  var u='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent('99B Collective: '+n.title)+'&dates='+z(nextAt)+'/'+z(end)+'&location='+encodeURIComponent(n.venue||'')+'&details='+encodeURIComponent((n.theme?'Theme: '+n.theme+'. ':'')+(n.snacks||''));
+  return '<a class="btn" href="'+u+'" target="_blank" rel="noopener">Add to Google Calendar</a>';
+}
+function opener(num,title,text){return '<div class="opener"><span class="num">'+num+'</span><h2>'+title+'</h2>'+(text?'<p>'+text+'</p>':'')+'</div>'}
+
+function masthead(){
+  return '<header class="masthead"><div class="awning" aria-hidden="true"></div>'+
+  '<div class="titlecard"><span class="label">A Film Club of Building 99B · IIT Delhi</span><h1>The <em>99B</em> Collective</h1><div class="rule"><span>✦</span></div><span class="label">Design · Mathematics · Public Policy</span></div>'+
+  '<div class="marquee" role="status"><span class="label">Now showing</span><strong>'+(hasNext?esc(n.title):'Next picture to be announced')+'</strong>'+
+  (nextAt?'<span class="label">'+esc(fmtDate(nextAt,{weekday:'short',day:'numeric',month:'short'}))+' · '+esc(fmtTime(nextAt))+'</span>':'')+'</div>'+
+  '<nav class="nav" aria-label="Sections"><a href="#showing">Now Showing</a><a href="#programme">Programme</a><a href="#suggest">Suggestion Box</a><a href="#tickets">Ticket Booth</a><a href="#archive">Archive</a><a href="#building">The Building</a></nav></header>';
+}
+function showing(){
+  var body;
+  if(!hasNext){body='<div class="empty"><span class="big">The projector is warming up.</span><span>The next screening will be announced here. Tell us what you would like to see in the meantime.</span>'+formButton('Suggest a film')+'</div>'}
+  else{
+    var facts=[['Date',nextAt?fmtDate(nextAt,{weekday:'long',day:'numeric',month:'long'}):'To be confirmed'],['Time',nextAt?fmtTime(nextAt):''],['Venue',n.venue],['Language',n.language],['Theme',n.theme],['Refreshments',n.snacks]].filter(function(f){return f[1]});
+    body='<div class="showing" style="display:grid;gap:18px"><div><span class="label">'+esc([n.year,n.director].filter(Boolean).join(' · '))+'</span><h3>'+esc(n.title)+'</h3></div>'+
+    (n.blurb?'<p style="margin:0">'+esc(n.blurb)+'</p>':'')+
+    '<dl class="facts">'+facts.map(function(f){return '<div><dt>'+f[0]+'</dt><dd>'+esc(f[1])+'</dd></div>'}).join('')+'</dl>'+
+    (nextAt?'<div class="countdown" id="cd"></div><p class="status-line" id="cd-line"></p>':'')+
+    (n.where?'<span class="legal">Screened legally via '+esc(n.where)+'</span>':'')+'<div class="row">'+calLink()+'</div></div>';
+  }
+  return '<section class="chapter t-pink" id="showing">'+opener('Chapter One','Now Showing','The next picture, the time, and the room. Bring a friend.')+'<div class="panel">'+body+'</div></section>';
+}
+function programme(){
+  var items=(S.programme||[]).slice().sort(function(a,b){return (a.date||'9')<(b.date||'9')?-1:1});
+  var langs=['All'];items.forEach(function(p){if(p.language&&langs.indexOf(p.language)<0)langs.push(p.language)});
+  var shown=items.filter(function(p){return ui.lang==='All'||p.language===ui.lang});
+  var inner=!items.length?'<div class="empty"><span class="big">The season is being programmed.</span><span>Your suggestions decide what goes here.</span></div>':
+    (langs.length>2?'<div class="chips" role="group" aria-label="Filter by language">'+langs.map(function(l){return '<button class="chip" data-lang="'+esc(l)+'" aria-pressed="'+(l===ui.lang)+'">'+esc(l)+'</button>'}).join('')+'</div>':'')+
+    '<ul class="reel">'+shown.map(function(p){var d=when(p.date,'18:00');
+      return '<li><div class="date-stamp">'+(d?'<b>'+esc(fmtDate(d,{day:'2-digit'}))+'</b><span>'+esc(fmtDate(d,{month:'short'}))+'</span>':'<b>?</b><span>TBC</span>')+'</div>'+
+      '<div><h3>'+esc(p.title)+'</h3><div class="meta">'+esc([p.year,p.language,p.theme].filter(Boolean).join(' · '))+'</div>'+(p.where?'<div class="meta">Available on '+esc(p.where)+'</div>':'')+'</div></li>'}).join('')+'</ul>';
+  return '<section class="chapter t-mustard" id="programme">'+opener('Chapter Two','The Programme','What is coming up this season. Filter by language to find your evening.')+'<div class="panel">'+inner+'</div></section>';
+}
+function suggest(){
+  return '<section class="chapter t-sky" id="suggest">'+opener('Chapter Three','The Suggestion Box','We screen the films you want to watch. Here is how to put one forward.')+
+  '<div class="panel telegram"><span class="label">Telegram for the Collective</span><h3>What should we watch next?</h3>'+
+  '<p>Send us a film you love, one you have been meaning to see, or a hidden gem. The form takes about two minutes and also asks which days suit you best.</p>'+formButton('Open the suggestion form')+'</div>'+
+  '<div class="panel plain checker"><span class="label">Before you suggest</span><h3 style="font-size:1.3rem">Check where your film is available</h3>'+
+  '<p style="margin:0;font-size:.92rem">We can only screen films we can legally access: rented or bought on YouTube, or streaming on a platform available in India. Type a title to look it up.</p>'+
+  '<form id="check-form"><label class="label" for="check-title" style="flex-basis:100%">Film title</label><input id="check-title" placeholder="e.g. a film you love" autocomplete="off"><button class="btn" type="submit">Look it up</button></form>'+
+  '<div class="links" id="check-links" hidden></div>'+
+  '<ul class="rules"><li>Not sure where it streams? Suggest it anyway and we will check.</li><li>Downloads and unofficial uploads are not eligible.</li></ul></div></section>';
+}
+function tickets(){
+  return '<section class="chapter t-navy" id="tickets">'+opener('Chapter Four','The Ticket Booth','Choose a seat and make your ticket for the next screening. Screenshot it to keep.')+
+  '<div class="panel booth"><div><div class="screen" aria-hidden="true"></div><div class="seats" role="group" aria-label="Seat map">'+
+  'ABCDEF'.split('').map(function(r){var h='<div class="seat-row"><span>'+r+'</span>';for(var i=1;i<=8;i++){if(i===5)h+='<span></span>';var id=r+i;h+='<button class="seat" data-seat="'+id+'" aria-pressed="'+(ui.seat===id)+'" aria-label="Seat '+id+'">'+i+'</button>'}return h+'</div>'}).join('')+
+  '</div></div><div style="display:grid;gap:14px;min-width:0"><div class="field"><label class="label" for="ticket-name">Name on ticket</label><input id="ticket-name" maxlength="40" value="'+esc(ui.name)+'" placeholder="Your name"></div>'+
+  '<div id="ticket"></div><p class="fine">Just for fun. Seating on the night is first come, first served.</p></div></div></section>';
+}
+function ticketHTML(){
+  var seat=ui.seat||'A1',name=ui.name||'Honoured Guest',no=String(hash(name+seat)%9000+1000);
+  return '<div class="ticket"><div class="main"><small>Admit one · 99B Collective</small><strong>'+esc(hasNext?n.title:'The Next Screening')+'</strong>'+
+  '<small>'+esc(nextAt?fmtDate(nextAt,{day:'numeric',month:'long'})+' · '+fmtTime(nextAt):'Date to be announced')+'</small><small>Issued to '+esc(name)+'</small></div>'+
+  '<div class="stub"><small>Row</small><b>'+esc(seat.charAt(0))+'</b><small>Seat '+esc(seat.slice(1))+'</small><small>No. '+no+'</small></div></div>';
+}
+function archive(){
+  var items=(S.archive||[]).slice().sort(function(a,b){return (a.date||'')<(b.date||'')?1:-1});
+  var inner=items.length?'<div class="cards">'+items.map(function(a){var d=when(a.date,'18:00');
+    return '<article class="card c'+(hash(a.title)%6)+'"><span class="label">'+esc(d?fmtDate(d,{day:'numeric',month:'short',year:'numeric'}):'Screened')+'</span><h3>'+esc(a.title)+'</h3><span class="foot">'+esc([a.year,a.language].filter(Boolean).join(' · '))+(a.theme?'<br>'+esc(a.theme):'')+'</span></article>'}).join('')+'</div>'
+    :'<div class="panel plain"><div class="empty"><span class="big">The reels are still in their cans.</span><span>Every film we screen gets a title card here.</span></div></div>';
+  return '<section class="chapter t-lav" id="archive">'+opener('Chapter Five','The Archive','Everything the Collective has screened, one title card per evening.')+inner+'</section>';
+}
+var FLOORS={
+  spp:{f:'6th floor',n:'School of Public Policy',t:'The Arguers',p:'Public Policy brings the questions: who a film is about, who it leaves out, and what it says about the cities and institutions we live in. Expect the discussion afterwards to run over time.'},
+  maths:{f:'5th floor',n:'Department of Mathematics',t:'The Pattern-Finders',p:'Mathematics brings structure: the rhythm of an edit, the symmetry of a composition, the puzzle in a plot. Every audience needs someone counting the beats.'},
+  design:{f:'4th floor',n:'Department of Design',t:'The Eye',p:'Design brings the eye for frame, colour and craft. If a film has a striking shot, someone from the fourth floor will tell you why it works.'}
+};
+function building(){
+  return '<section class="chapter t-lav" id="building">'+opener('Chapter Six','The Building','The Collective is named after 99B, home to three departments. Tap a floor to step inside.')+
+  '<div class="panel building"><div class="facade"><div class="roof">99B</div>'+['spp','maths','design'].map(function(k){var f=FLOORS[k];
+    return '<button class="floor" data-floor="'+k+'" aria-pressed="'+(ui.floor===k)+'"><span class="win" aria-hidden="true"><i></i><i></i><i></i></span><span><small>'+esc(f.f)+'</small><span>'+esc(f.n)+'</span></span></button>'}).join('')+
+  '<div class="door" aria-hidden="true"></div></div><div class="room" id="room"></div></div></section>';
+}
+function roomHTML(){var f=FLOORS[ui.floor];return '<span class="label">'+esc(f.f+' · '+f.n)+'</span><h3>'+esc(f.t)+'</h3><p>'+esc(f.p)+'</p><p class="fine">Everyone at IIT Delhi is welcome, whichever building you call home.</p>'}
+
+function render(){
+  document.getElementById('app').innerHTML='<div class="wrap">'+masthead()+showing()+programme()+suggest()+tickets()+archive()+building()+
+  '<footer><div class="rule"><span>✦</span></div><p>The 99B Collective · Film club at IIT Delhi</p><p>Films are screened only from legal sources. Title cards on this page are original designs, not film posters.</p></footer></div>';
+  document.getElementById('ticket').innerHTML=ticketHTML();
+  document.getElementById('room').innerHTML=roomHTML();
+  tick();
+}
+function tick(){
+  var cd=document.getElementById('cd');if(!cd||!nextAt)return;
+  var ms=nextAt-Date.now(),line=document.getElementById('cd-line');
+  if(ms>0){var s=Math.floor(ms/1000),d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),sec=s%60;
+    cd.innerHTML=[[d,'Days'],[h,'Hours'],[m,'Minutes'],[sec,'Seconds']].map(function(x){return '<div><b>'+String(x[0]).padStart(2,'0')+'</b><span>'+x[1]+'</span></div>'}).join('');
+    line.textContent=d===0?'Tonight. Save a seat for a friend.':'Until the lights go down.';cd.hidden=false}
+  else{cd.hidden=true;line.textContent=ms>-3*3600000?'Showing now. Come in quietly.':'This screening has happened. The next one will be announced soon.'}
+}
+setInterval(tick,1000);
+
+document.addEventListener('click',function(e){
+  var c=e.target.closest('[data-lang]');if(c){ui.lang=c.getAttribute('data-lang');document.getElementById('programme').outerHTML=programme();return}
+  var s=e.target.closest('[data-seat]');if(s){ui.seat=s.getAttribute('data-seat');keep('seat',ui.seat);document.querySelectorAll('[data-seat]').forEach(function(b){b.setAttribute('aria-pressed',String(b===s))});document.getElementById('ticket').innerHTML=ticketHTML();return}
+  var f=e.target.closest('[data-floor]');if(f){ui.floor=f.getAttribute('data-floor');document.querySelectorAll('[data-floor]').forEach(function(b){b.setAttribute('aria-pressed',String(b===f))});document.getElementById('room').innerHTML=roomHTML()}
+});
+document.addEventListener('input',function(e){if(e.target.id==='ticket-name'){ui.name=e.target.value.trim();keep('name',ui.name);document.getElementById('ticket').innerHTML=ticketHTML()}});
+document.addEventListener('submit',function(e){
+  if(e.target.id!=='check-form')return;e.preventDefault();
+  var t=document.getElementById('check-title').value.trim(),box=document.getElementById('check-links');if(!t){box.hidden=true;return}
+  var q=encodeURIComponent(t);
+  box.innerHTML='<a href="https://www.justwatch.com/in/search?q='+q+'" target="_blank" rel="noopener">JustWatch India (all platforms)</a>'+
+  '<a href="https://mubi.com/en/in/search/films?query='+q+'" target="_blank" rel="noopener">MUBI</a>'+
+  '<a href="https://www.google.com/search?q='+encodeURIComponent('where to watch '+t+' India')+'" target="_blank" rel="noopener">Google: where to watch in India</a>';
+  box.hidden=false;
+});
+render();
+})();
+</script>
+</body>
+</html>
