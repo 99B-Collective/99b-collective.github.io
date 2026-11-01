@@ -171,19 +171,6 @@ section{scroll-margin-top:72px;display:grid;gap:20px;align-content:start;min-wid
 /* Interludes */
 .interlude{width:min(100%,960px);margin-inline:auto;display:grid;gap:12px;justify-items:center}
 .interlude-cap{margin:0;font-family:var(--display);font-style:italic;font-size:1.1rem;color:var(--muted);text-align:center}
-.room>svg{width:100%;height:auto;display:block}
-.room .screenimg{overflow:hidden}
-.room>svg{border:1.5px solid var(--ink);border-radius:4px;box-shadow:0 30px 60px -30px rgba(42,26,48,.55),8px 8px 0 var(--shadow)}
-.room .beam{animation:beam 2.6s steps(3) infinite;mix-blend-mode:screen}
-.room .mote{fill:#FFF4D6;animation:mote 7s linear infinite}
-.room .head{transform-box:fill-box;transform-origin:50% 100%;animation:bob 4.6s ease-in-out infinite}
-.room .head.whisper{animation:whisper 7s ease-in-out infinite}
-.room .head.laugh{animation:laugh 6s ease-in-out infinite}
-@keyframes beam{0%{opacity:.85}33%{opacity:1}66%{opacity:.9}}
-@keyframes mote{0%{transform:translate(0,0);opacity:0}15%{opacity:.9}85%{opacity:.7}100%{transform:translate(18px,-70px);opacity:0}}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
-@keyframes whisper{0%,62%,100%{transform:rotate(0)}68%,86%{transform:rotate(16deg) translateX(4px)}}
-@keyframes laugh{0%,70%,100%{transform:translateY(0)}74%,82%{transform:translateY(-5px)}78%,86%{transform:translateY(0)}}
 
 /* Football ground scene */
 .scene{position:relative;border:1.5px solid var(--on-tone);border-radius:3px;overflow:hidden;aspect-ratio:800/340;max-width:100%;box-shadow:0 24px 40px -24px rgba(42,26,48,.55)}
@@ -210,41 +197,36 @@ section{scroll-margin-top:72px;display:grid;gap:20px;align-content:start;min-wid
 .pent{fill:#2A1A30}
 .seam{stroke:#8C8098;stroke-width:1.2}
 
-/* Walking to 99B */
-.walk .street{position:relative;width:100%;height:190px;border-bottom:2px solid var(--ink);overflow:hidden;border-radius:4px 4px 0 0;background:linear-gradient(#E9E1F6,#F6E9EE 70%,#EADFD3)}
-.walk .backdrop{position:absolute;inset:0;width:100%;height:100%}
-.walk .lampglow{animation:flood 3s ease-in-out infinite alternate}
-.walker{position:absolute;bottom:0;left:-60px;width:calc(54px*var(--s));animation:walk var(--d) linear infinite;animation-delay:var(--delay);z-index:1}
-.walker svg{display:block;width:100%;height:auto;overflow:visible;animation:step .45s ease-in-out infinite alternate}
-.walker .w-skin{fill:#C98F6B}
-.walker .w-hair{fill:#2A1A30}
-.walker .w-body{fill:var(--c)}
-.walker .w-shadow{fill:#3A2440;opacity:.18}
-.walker .leg rect{fill:#2A1A30}
-.walker .leg{transform-box:fill-box;transform-origin:50% 0}
-.walker .l1{animation:legA .45s ease-in-out infinite alternate}.walker .l2{animation:legB .45s ease-in-out infinite alternate}
-.walker .cup{fill:#FDF7EE;stroke:#3A2440;stroke-width:1.2}
-.walker .steam{animation:steam 1.6s ease-in-out infinite}
-@keyframes steam{0%{opacity:0;transform:translateY(2px)}50%{opacity:.8}100%{opacity:0;transform:translateY(-4px)}}
-@keyframes walk{from{left:-60px}to{left:calc(100% - 130px)}}
-@keyframes step{from{transform:translateY(0)}to{transform:translateY(-2px)}}
-@keyframes legA{from{transform:rotate(24deg)}to{transform:rotate(-24deg)}}
-@keyframes legB{from{transform:rotate(-24deg)}to{transform:rotate(24deg)}}
-.door99{position:absolute;right:14px;bottom:0;width:110px;height:168px;background:linear-gradient(90deg,#F2DFC0,#F8EBD6 40%,#EBD3AE);border:2px solid #3A2440;border-bottom:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;align-content:start;padding:28px 14px 0;z-index:2;box-shadow:-10px 0 24px -12px rgba(42,26,48,.4)}
-.door99 span{position:absolute;top:6px;left:0;right:0;text-align:center;font-family:var(--display);font-weight:600;font-size:1rem;color:#3A2440}
-.door99 i{height:18px;background:#F6C46E;border:1.5px solid #3A2440;box-shadow:0 0 10px #F6C46E}
-.door99::after{content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:46px;height:72px;background:linear-gradient(#D2668D,#9E3359);border:2px solid #3A2440;border-bottom:0;border-radius:23px 23px 0 0}
-@media (prefers-reduced-motion:reduce){.walker{left:calc(var(--delay) * -4%)}}
+/* Walking to 99B, folded paper */
+.walk .street{position:relative;width:100%;aspect-ratio:960/240;max-width:100%}
+.walk .pscene{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.walk .pscene.front{z-index:2;pointer-events:none}
+.psun{animation:psun 40s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes psun{to{transform:rotate(360deg)}}
+.ptree{transform-box:fill-box;transform-origin:50% 100%;animation:ptree 6s ease-in-out infinite alternate}
+@keyframes ptree{from{transform:rotate(-1.5deg)}to{transform:rotate(1.5deg)}}
+.cranes{animation:fly 34s linear infinite}
+.cranes.slow{animation-duration:46s;animation-delay:-20s}
+@keyframes fly{from{transform:translate(-60px,64px)}to{transform:translate(1020px,30px)}}
+.cr{animation:glide 3s ease-in-out infinite alternate}
+.cr.c2{animation-delay:-1.4s}
+@keyframes glide{from{transform:translateY(-6px)}to{transform:translateY(6px)}}
+.crane .wing{transform-box:fill-box;transform-origin:50% 100%;animation:flap .9s ease-in-out infinite alternate}
+.crane .w2{animation-delay:-.45s}
+@keyframes flap{from{transform:scaleY(1)}to{transform:scaleY(-.35)}}
+.pwalker{position:absolute;bottom:10%;left:-7%;width:calc(7% * var(--s));z-index:1;animation:pwalk var(--d) linear infinite;animation-delay:var(--delay)}
+.pwalker svg{display:block;width:100%;height:auto;overflow:visible;animation:step .42s ease-in-out infinite alternate}
+.pleg{transform-box:fill-box;transform-origin:50% 0}
+.pl1{animation:legA .42s ease-in-out infinite alternate}.pl2{animation:legB .42s ease-in-out infinite alternate}
+.pcup .steam{animation:steam 1.6s ease-in-out infinite}
+@keyframes pwalk{0%{left:-7%;opacity:0}4%{opacity:1}92%{opacity:1}100%{left:86%;opacity:0}}
+@keyframes step{from{transform:translateY(0)}to{transform:translateY(-3%)}}
+@keyframes legA{from{transform:rotate(22deg)}to{transform:rotate(-22deg)}}
+@keyframes legB{from{transform:rotate(-22deg)}to{transform:rotate(22deg)}}
+@keyframes steam{0%{opacity:0;transform:translateY(2px)}50%{opacity:.9}100%{opacity:0;transform:translateY(-4px)}}
+@media (prefers-reduced-motion:reduce){.pwalker{left:calc(var(--delay) * -4.5%)}}
 
-/* Depth: background aura, card lift and tilt */
-.aura{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.aura i{position:absolute;width:62vmax;height:62vmax;border-radius:50%;opacity:.7;animation:drift 30s ease-in-out infinite alternate}
-.aura i:nth-child(1){left:-28vmax;top:-10vmax;background:radial-gradient(circle,#F3C9D2 0,rgba(243,201,210,0) 65%)}
-.aura i:nth-child(2){right:-30vmax;top:20vh;background:radial-gradient(circle,#CDBEEB 0,rgba(205,190,235,0) 65%);animation-delay:-10s}
-.aura i:nth-child(3){left:10vw;bottom:-40vmax;background:radial-gradient(circle,#F6E0B5 0,rgba(246,224,181,0) 62%);animation-delay:-20s}
-@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(6vmax,4vmax) scale(1.12)}}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .aura i{opacity:.18}}
-:root[data-theme="dark"] .aura i{opacity:.18}
+/* Depth: card lift and tilt */
 .wrap{position:relative;z-index:1}
 .panel{box-shadow:0 28px 50px -30px rgba(42,26,48,.5),6px 6px 0 var(--shadow)}
 .marquee{box-shadow:0 30px 50px -30px rgba(20,16,40,.6)}
@@ -811,70 +793,63 @@ function pitchScene(u){
     '<g class="ballhop"><g transform="translate(0 280)">'+footballSVG(u,20)+'</g></g></g>';
 }
 
-/* ---------- Interlude: the screening room ---------- */
-function screeningRoom(){
-  var heads=[
-    {x:70,c:'#C24A72',hair:'bun'},{x:150,c:'#2F4A7A',hair:'cap'},{x:230,c:'#A9761C',hair:'short'},{x:310,c:'#7B5FB0',hair:'long'},
-    {x:390,c:'#C8433A',hair:'short'},{x:470,c:'#2F4A7A',hair:'bun'},{x:550,c:'#C24A72',hair:'long'},{x:630,c:'#A9761C',hair:'cap'},{x:710,c:'#7B5FB0',hair:'short'}
-  ];
-  function head(h,i,row){
-    var y=row?314:262, s=row?1.14:.96, cls='head'+(i===3&&!row?' whisper':'')+(i===6&&row?' laugh':'');
-    var hair=h.hair==='bun'?'<circle cx="0" cy="-34" r="9"/>':h.hair==='cap'?'<path d="M-19 -18 Q0 -42 19 -18 L27 -15 L-19 -15Z"/>':h.hair==='long'?'<path d="M-18 -14 Q-21 18 -14 24 L14 24 Q21 18 18 -14 Q0 -36 -18 -14Z"/>':'<path d="M-17 -12 Q0 -33 17 -12 Q0 -21 -17 -12Z"/>';
-    return '<g transform="translate('+h.x+' '+y+') scale('+s+')"><g class="'+cls+'" style="animation-delay:'+(-(i*.7))+'s;fill:'+h.c+'">'+hair+'<circle cx="0" cy="-10" r="17"/><path d="M-30 30 Q-30 8 0 8 Q30 8 30 30Z"/>'+
-      '<ellipse cx="-5" cy="-19" rx="8" ry="5" fill="#fff" opacity=".22"/><path d="M-30 30 Q-30 8 0 8 Q30 8 30 30Z" fill="url(#rim)" /></g></g>';
-  }
-  function seats(y,s,n,off){var o='';for(var k=0;k<n;k++)o+='<rect x="'+(off+k*80-30*s)+'" y="'+y+'" width="'+(60*s)+'" height="'+(60*s)+'" rx="'+(12*s)+'" fill="url(#seat)"/>';return o}
-  var front=heads.map(function(h,i){return head(h,i,0)}).join('');
-  var back=heads.slice(0,8).map(function(h,i){return head({x:h.x+40,c:heads[(i+4)%9].c,hair:heads[(i+2)%9].hair},i,1)}).join('');
-  var dust='';for(var d=0;d<16;d++){var x=300+Math.round(Math.random()*180),y=120+Math.round(Math.random()*200);dust+='<circle class="mote" cx="'+x+'" cy="'+y+'" r="'+(1+Math.random()*1.6).toFixed(1)+'" style="animation-delay:'+(-Math.random()*6).toFixed(2)+'s;animation-duration:'+(5+Math.random()*4).toFixed(1)+'s"/>'}
-  return '<div class="interlude room" aria-hidden="true"><svg viewBox="0 0 780 360" preserveAspectRatio="xMidYMax meet">'+
-    '<defs><linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B9A8E0"/><stop offset="1" stop-color="#D9CCF2"/></linearGradient>'+
-    '<linearGradient id="seat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3D4C80"/><stop offset="1" stop-color="#1F2748"/></linearGradient>'+
-    '<linearGradient id="rim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF4D6" stop-opacity=".35"/><stop offset=".3" stop-color="#FFF4D6" stop-opacity="0"/></linearGradient>'+
-    '<linearGradient id="beamg" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FFF4D6" stop-opacity=".55"/><stop offset="1" stop-color="#FFF4D6" stop-opacity=".05"/></linearGradient>'+
-    '<radialGradient id="spill" cx="50%" cy="0%" r="80%"><stop offset="0" stop-color="#FFF4D6" stop-opacity=".45"/><stop offset="1" stop-color="#FFF4D6" stop-opacity="0"/></radialGradient>'+
-    '<linearGradient id="curt" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9E3359"/><stop offset=".5" stop-color="#D2668D"/><stop offset="1" stop-color="#9E3359"/></linearGradient></defs>'+
-    '<rect width="780" height="360" fill="url(#wall)"/>'+
-    '<rect x="100" y="210" width="580" height="80" fill="url(#spill)"/>'+
-    '<rect x="150" y="22" width="480" height="206" rx="6" fill="#3A2440" opacity=".25"/>'+
-    '<svg x="160" y="30" width="460" height="190" viewBox="0 0 800 340" preserveAspectRatio="xMidYMid slice" class="screenimg">'+pitchScene('R')+'</svg>'+
-    '<rect x="160" y="30" width="460" height="190" rx="3" fill="none" stroke="#3A2440" stroke-width="3"/>'+
-    '<g class="curtain"><path d="M108 10 Q134 120 116 236 L76 236 L76 10Z" fill="url(#curt)"/><path d="M672 10 Q646 120 664 236 L704 236 L704 10Z" fill="url(#curt)"/><rect x="60" y="4" width="660" height="16" rx="4" fill="#9E3359"/></g>'+
-    '<path class="beam" d="M390 372 L160 30 L620 30 Z" fill="url(#beamg)"/>'+
-    '<g class="motes">'+dust+'</g>'+
-    '<rect x="0" y="246" width="780" height="114" fill="#2F3A63"/>'+
-    front+seats(272,1,10,70)+back+seats(330,1.18,9,110)+
-  '</svg><p class="interlude-cap">'+(hasNext&&nextAt?esc(fmtDate(nextAt,{weekday:'long'}))+', '+esc(fmtTime(nextAt))+'. There is a seat with your name on it.':'There is a seat with your name on it.')+'</p></div>';
+/* ---------- Interlude: walking to 99B, in folded paper ---------- */
+function fold(pts,a,b){ /* a shape folded down its middle: two polygons in a light and a shaded tone */
+  return '<polygon points="'+pts[0]+'" fill="'+a+'"/><polygon points="'+pts[1]+'" fill="'+b+'"/>';
 }
-
-/* ---------- Interlude: walking to 99B ---------- */
-function walkers(){
-  var cols=['#C24A72','#2F4A7A','#A9761C','#7B5FB0','#C8433A','#3A2440','#2F4A7A','#C24A72'];
-  var hairs=['<circle cx="0" cy="-62" r="5"/>','<path d="M-10 -54 Q0 -68 10 -54 L13 -52 L-10 -52Z"/>','<path d="M-9 -50 Q-11 -36 -7 -34 L7 -34 Q11 -36 9 -50 Q0 -66 -9 -50Z"/>','<path d="M-9 -52 Q0 -64 9 -52 Q0 -57 -9 -52Z"/>'];
-  var people=cols.map(function(c,i){
-    var cup=i%3===0?'<g class="cupg"><rect x="10" y="-28" width="8" height="10" rx="1.5" class="cup"/><path d="M12 -32 q1 -3 0 -5 M15 -32 q1 -3 0 -5" stroke="#6E5C74" stroke-width=".8" fill="none" class="steam"/></g>':'';
-    var tall=i%2?1:0.9;
-    return '<div class="walker" style="--d:'+(16+(i%3)*4)+'s;--delay:'+(-i*2.6)+'s;--c:'+c+';--s:'+tall+'"><svg viewBox="-24 -70 48 76">'+
-      '<ellipse cx="0" cy="4" rx="13" ry="3" class="w-shadow"/>'+
-      '<g class="leg l1"><rect x="-6" y="-14" width="5" height="18" rx="2.5"/></g><g class="leg l2"><rect x="1" y="-14" width="5" height="18" rx="2.5"/></g>'+
-      '<path d="M-11 -40 Q0 -45 11 -40 L13 -12 L-13 -12Z" class="w-body"/><path d="M-11 -40 Q0 -45 11 -40 L12 -30 L-12 -30Z" fill="#fff" opacity=".15"/>'+
-      '<circle cx="0" cy="-52" r="9" class="w-skin"/><g class="w-hair">'+hairs[i%4]+'</g>'+cup+
-    '</svg></div>'}).join('');
-  var scenery='<svg class="backdrop" viewBox="0 0 900 170" preserveAspectRatio="xMidYMax slice">'+
-    '<path d="M0 120 Q120 96 240 112 T480 104 T720 110 T900 100 L900 170 L0 170Z" fill="#CDBEEB" opacity=".55"/>'+
-    '<g fill="#B7A6DF" opacity=".75"><rect x="40" y="62" width="70" height="108"/><rect x="120" y="84" width="50" height="86"/><rect x="560" y="70" width="80" height="100"/><rect x="650" y="90" width="44" height="80"/></g>'+
-    '<g fill="#FDF7EE" opacity=".8"><rect x="52" y="76" width="10" height="12"/><rect x="72" y="76" width="10" height="12"/><rect x="92" y="76" width="10" height="12"/><rect x="52" y="100" width="10" height="12"/><rect x="92" y="100" width="10" height="12"/><rect x="574" y="84" width="10" height="12"/><rect x="594" y="84" width="10" height="12"/><rect x="614" y="84" width="10" height="12"/><rect x="594" y="108" width="10" height="12"/></g>'+
-    '<g><rect x="300" y="48" width="4" height="122" fill="#3A2440"/><path d="M302 50 q14 -8 26 2" stroke="#3A2440" stroke-width="4" fill="none"/><circle cx="328" cy="56" r="5" fill="#F6C46E"/><circle cx="328" cy="58" r="22" fill="#F6C46E" opacity=".25" class="lampglow"/></g>'+
-    '<g><rect x="470" y="96" width="5" height="74" fill="#3A2440"/><circle cx="472" cy="88" r="20" fill="#C24A72" opacity=".75"/><circle cx="460" cy="96" r="14" fill="#C24A72" opacity=".6"/><circle cx="486" cy="98" r="13" fill="#C24A72" opacity=".6"/></g>'+
-    '<g><rect x="200" y="104" width="4" height="66" fill="#3A2440"/><circle cx="202" cy="96" r="16" fill="#7B5FB0" opacity=".6"/><circle cx="192" cy="104" r="11" fill="#7B5FB0" opacity=".5"/></g>'+
+function paperTree(x,s,light,dark,i){
+  return '<g transform="translate('+x+' 216) scale('+s+')"><g class="ptree" style="animation-delay:'+(-i*1.7)+'s">'+
+    '<rect x="-3" y="-26" width="6" height="26" fill="#6E4A5E"/>'+
+    fold(['0,-118 -24,-74 0,-80','0,-118 0,-80 24,-74'],light,dark)+
+    fold(['0,-92 -32,-30 0,-38','0,-92 0,-38 32,-30'],light,dark)+
+  '</g></g>';
+}
+function crane(c1,c2){
+  return '<g class="crane"><g class="wing w1">'+fold(['0,0 -26,-22 -6,-2','0,0 -6,-2 -10,6'],c1,c2)+'</g>'+
+    fold(['-14,4 0,0 14,4 0,8','0,0 14,4 0,8'],c1,c2)+'<polygon points="14,4 26,-8 22,6" fill="'+c2+'"/><polygon points="-14,4 -24,-2 -18,6" fill="'+c1+'"/>'+
+    '<g class="wing w2">'+fold(['0,0 20,-24 6,-2','0,0 6,-2 10,6'],c2,c1)+'</g></g>';
+}
+function paperPerson(i){
+  var P=[['#F3C9D2','#D98AA4'],['#A9CBEA','#6F97C4'],['#F1D58A','#D4A94B'],['#CDBEEB','#9D86D6'],['#F4B8A6','#D9826B'],['#2F4A7A','#1F3358']][i%6];
+  var hairs=[['-10,-80 0,-91 0,-80','0,-91 10,-80 0,-80'],['-11,-79 0,-92 11,-79','-11,-79 11,-79 13,-76'],['-11,-80 0,-90 0,-60 -12,-62','0,-90 11,-80 12,-62 0,-60'],['-10,-80 -4,-92 4,-92 10,-80','-4,-92 4,-92 0,-86']][i%4];
+  var cup=i%3===0?'<g class="pcup"><polygon points="14,-46 22,-46 21,-36 15,-36" fill="#FDF7EE"/><polygon points="18,-46 22,-46 21,-36 18,-36" fill="#E9DCCB"/><path class="steam" d="M17 -50 q2 -4 0 -7 M20 -50 q2 -4 0 -7" stroke="#B9A8C8" stroke-width="1" fill="none"/></g>':'';
+  return '<svg viewBox="-30 -100 60 104">'+
+    '<ellipse cx="0" cy="2" rx="14" ry="2.6" fill="#3A2440" opacity=".14"/>'+
+    '<g class="pleg pl1"><polygon points="-7,-24 -1,-24 -2,0 -7,0" fill="#3A2440"/></g><g class="pleg pl2"><polygon points="1,-24 7,-24 7,0 2,0" fill="#2A1A30"/></g>'+
+    fold(['-10,-62 0,-62 0,-22 -17,-22','0,-62 10,-62 17,-22 0,-22'],P[0],P[1])+
+    '<polygon points="-6,-62 6,-62 0,-53" fill="#FDF7EE"/>'+
+    fold(['0,-82 -9,-77 -9,-67 0,-62','0,-82 9,-77 9,-67 0,-62'],'#E8BE9C','#CF9C78')+
+    '<g fill="#3A2440">'+'<polygon points="'+hairs[0]+'" fill="#3A2440"/><polygon points="'+hairs[1]+'" fill="#24152B"/></g>'+cup+
   '</svg>';
-  return '<div class="interlude walk" aria-hidden="true"><div class="street">'+scenery+people+
-    '<div class="door99"><span>99B</span><i></i><i></i><i></i><i></i></div></div></div>';
+}
+function walkers(){
+  var people='';for(var i=0;i<7;i++){people+='<div class="pwalker" style="--d:'+(18+(i%3)*4)+'s;--delay:'+(-i*3.1)+'s;--s:'+(i%2?1:.92)+'">'+paperPerson(i)+'</div>'}
+  var sun='';for(var k=0;k<8;k++){var a1=k*45*Math.PI/180,a2=(k*45+45)*Math.PI/180;sun+='<polygon points="0,0 '+(Math.cos(a1)*34).toFixed(1)+','+(Math.sin(a1)*34).toFixed(1)+' '+(Math.cos(a2)*34).toFixed(1)+','+(Math.sin(a2)*34).toFixed(1)+'" fill="'+(k%2?'#E7A645':'#F6C46E')+'"/>'}
+  var back='<svg class="pscene" viewBox="0 0 960 240" preserveAspectRatio="xMidYMax meet">'+
+    '<g transform="translate(400 58)"><g class="psun">'+sun+'</g></g>'+
+    '<g class="cranes"><g class="cr c1" transform="translate(0 0)">'+crane('#FDF7EE','#E5D6EE')+'</g></g>'+
+    '<g class="cranes slow"><g class="cr c2">'+crane('#F3C9D2','#D98AA4')+'</g></g>'+
+    paperTree(90,1.05,'#F3C9D2','#D98AA4',4)+paperTree(250,1.3,'#CDBEEB','#9D86D6',0)+paperTree(296,.85,'#F3C9D2','#D98AA4',1)+paperTree(540,1.05,'#F3C9D2','#D98AA4',2)+paperTree(592,1.4,'#CDBEEB','#9D86D6',3)+paperTree(700,.9,'#F1D58A','#D4A94B',5)+
+    '<polygon points="0,216 960,216 960,226 0,226" fill="#F6E6C8"/><polygon points="0,226 960,226 960,240 0,240" fill="#E7CFA8"/>'+
+  '</svg>';
+  var win=function(x,y){return fold([x+','+y+' '+(x+22)+','+y+' '+x+','+(y+22),(x+22)+','+y+' '+(x+22)+','+(y+22)+' '+x+','+(y+22)],'#F6C46E','#E7A645')};
+  var front='<svg class="pscene front" viewBox="0 0 960 240" preserveAspectRatio="xMidYMax meet">'+
+    '<g transform="translate(790 216)">'+
+      '<polygon points="-26,-150 0,-160 0,0 -26,-6" fill="#E3C79C"/>'+
+      '<rect x="0" y="-160" width="140" height="160" fill="#FBEBD3"/>'+
+      fold(['-30,-158 70,-206 70,-160','70,-206 146,-158 70,-160'],'#F3C9D2','#D98AA4')+
+      '<polygon points="-30,-158 0,-160 70,-160 -2,-150" fill="#C24A72" opacity=".25"/>'+
+      '<text x="70" y="-170" text-anchor="middle" font-family="Bodoni Moda,Georgia,serif" font-weight="600" font-size="20" fill="#3A2440">99B</text>'+
+      win(16,-146)+win(52,-146)+win(88,-146)+win(16,-108)+win(102,-108)+
+      '<g class="pdoor">'+fold(['52,0 52,-58 70,-74 70,0','70,-74 88,-58 88,0 70,0'],'#C24A72','#9E3359')+'</g>'+
+      '<polygon points="44,0 96,0 100,6 40,6" fill="#E7CFA8"/>'+
+    '</g></svg>';
+  return '<div class="interlude walk" aria-hidden="true"><div class="street">'+back+people+front+'</div></div>';
 }
 
 function render(){
   document.getElementById('app').innerHTML='<div class="wrap">'+masthead()+
-  showing()+invite()+programme()+screeningRoom()+suggest()+tickets()+
+  showing()+invite()+programme()+suggest()+tickets()+
   bingoSection()+talk()+glossary()+archive()+crew()+walkers()+charter()+
   '<footer><div class="rule"><span>✦</span></div><p>The 99B Collective · Film club at IIT Delhi</p><p>All films are screened from legal sources.</p>'+(S.alertsUrl?'<div class="row" style="justify-content:center">'+alertsButton()+'</div>':'')+'</footer></div>';
   document.getElementById('ticket').innerHTML=ticketHTML();
@@ -918,7 +893,6 @@ document.addEventListener('submit',function(e){
   box.hidden=false;
 });
 document.documentElement.classList.add('js');
-(function(){var a=document.createElement('div');a.className='aura';a.setAttribute('aria-hidden','true');a.innerHTML='<i></i><i></i><i></i>';document.body.insertBefore(a,document.body.firstChild)})();
 setTimeout(function(){document.body.classList.add('ready')},4000);
 render();
 
