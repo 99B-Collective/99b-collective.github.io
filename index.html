@@ -461,8 +461,8 @@ var SETTINGS = {
     language: "Malayalam, with English subtitles",
     theme: "",
     date: "2026-11-04",    // the date switches on the countdown and calendar buttons
-    time: "17:00",         // 24-hour IST; change if the start time is different
-    venue: "Building 99B, IIT Delhi",
+    time: "17:30",         // 24-hour IST; change if the start time is different
+    venue: "Department of Design, Building 99B",
     where: "",             // legal source, e.g. "YouTube rental"
     refreshments: "Refreshments will be served.",
     blurb: "A small-town football manager in Malappuram finds himself looking after his injured Nigerian striker at home, and an unlikely friendship begins."
@@ -657,7 +657,7 @@ function archive(){
     :'<div class="panel plain"><div class="empty"><span class="big">The reels are still in their cans.</span><span>Every film we screen gets a title card here, and you can stamp the ones you came to.</span></div></div>';
   var total=items.reduce(function(t,a){return t+(parseInt(a.attendance,10)||0)},0);
   var tally=items.length?'<div class="tally"><div><b>'+items.length+'</b><span>'+(items.length===1?'screening':'screenings')+'</span></div>'+(total?'<div><b>'+total+'</b><span>seats filled</span></div>':'')+'<div><b>3</b><span>floors of 99B</span></div></div>':'';
-  return '<section class="t-cream" id="archive">'+head('The Archive','Everything the Collective has screened, one title card per evening.')+tally+inner+'</section>';
+  return '<section class="t-cream" id="archive">'+head('The Archive','Everything the Collective has screened.')+inner+'</section>';
 }
 function charter(){
   var floors=[['6th floor','School of Public Policy'],['5th floor','Department of Mathematics'],['4th floor','Department of Design']];
